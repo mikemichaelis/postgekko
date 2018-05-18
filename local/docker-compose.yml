@@ -1,0 +1,19 @@
+version: "2"
+services:
+    database:
+        build: ../postgres 
+        restart: always
+        container_name: postgres
+        volumes:
+            - ${POSTGRES_DATA}:/var/lib/postgresql/data
+            - ${POSTGRES_LOGS}:/var/log
+        environment:
+            - "POSTGRES_USER=postgres"
+            - "POSTGRES_PASSWORD=${POSTGRESPASS}" 
+        ports:
+            - "5432:5432"
+        networks:
+            - postgres
+networks:
+    postgres:
+        driver: bridge
