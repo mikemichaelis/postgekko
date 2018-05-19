@@ -1,8 +1,13 @@
 Run PostgresSQL Docker environment locally to be used with Gekko
-**This guide assumes you have Docker installed on your local machine**
+PREREQUISITES
 
-1. Skip doing if you will be customizing #3 below, but you should read anyway.
-    First create three folders on your local computer.
+Docker
+Git
+
+You have cloned this repository to a local repository.
+
+1. Read but skip this step if you will be customizing #3 below.
+    Create three folders on your local computer.
 
     cd ~
     mkdir postgress
@@ -11,25 +16,32 @@ Run PostgresSQL Docker environment locally to be used with Gekko
     mkdir logs
     mkdir backup
 
-    In these three folders the postgresSql server will store data, logs, and backups.
+    In these three folders the PostgresSql server will store data, logs, and backups.  This is how persistence of the database will happen between different instances of the postgres container.
 
     These folders can exist anywhere in the filesystem.  You can put them on external media, such as a USB drive.  Performance of the media should be very high.
 
-2. cd into the ~/git/postgekko folder
+2. Clone this git respository
 
-3. Customize the following values in the ./settings file.
+    mkdir ~/git
+    cd ~/git
+    git clone https://github.com/mikemichaelis/postgekko.git
 
-    nano settings
+2. make ~/git/postgekko your CWD
+
+    cd postgekko
+
+3. Customize the following values in the ./settings.sh file.
+
+    nano settings.sh
     
-    The default values will work as is and will write to a postgres folder the users home,
-    or update to an external USB drive (ie /media/usb1/postgres/[data|logs|backup])
+    The default values will work as is and will write to a postgres folder (created above) in the users home.  Otherwise update to folders on the local file system.  This can be an external USB drive (ie /media/usb1/postgres/[data|logs|backup]).  Set the password that will be assigned to the postgres sa user.
 
     export POSTGRESPASS="password"
     export POSTGRES_DATA="~/postgres/data"  
     export POSTGRES_LOGS="~/postgres/logs"
     export POSTGRES_BACKUP="~/postgres/backup"
 
-    If you are wondering why the use of ENVIRONMENT VARIABLES it is because these are used in the ./docker-compose.yml file, not in a shell script.  So the mechanism to pass parameters to docker-compose is through the environment.
+    The use of ENVIRONMENT VARIABLES is because these values are used in the ./docker-compose.yml file, not in a shell script.  So one mechanism to pass parameters to docker-compose is through the environment.
 
 4. Build the docker image:
     cd postgress
@@ -40,20 +52,16 @@ Run PostgresSQL Docker environment locally to be used with Gekko
     chmod +x ./run_postgres.sh
     ./run_postgres.sh
 
-6. You can now check the values you assgned above for POSTGRES_DATA|LOGS|BACKUP
-    Most likely you will be denied access to the folders while the container is executing.  
+6. You should at this point run a single instance of gekko and have it create the initial database.  The postgresSql server will be available on localhost:5432 password=$POSTGRESPASS (from above).  I will leave this as an excercise for the reader to perform.  You should afterward determine the name of the db that was created.  You may now also begin populating the db with data.
 
-7. Attach to the postgres container to backup and restore a database
+7. Attach to the postgres container to backup and restore the database
 
     docker ps
         [copy container id of postgres]
     docker exec -i -t [container id] /bin/bash
         [you are now running a shell in the docker container]
-    ls
-        [you will see custom scripts to backup / restore]
-        [the commands are]
-    ./backup -p /postgres/backup -d [name of db to backup]
-    ./restore -d /postgres/backup/[name of db to restore]
+    ./backup.sh -d [name of db to backup]
+    ./restore.sh -d /postgres/backup/[name of db to restore]
      
      NOTE to see the following errors during restore is acceptable
      
