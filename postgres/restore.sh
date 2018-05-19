@@ -3,24 +3,7 @@
 # This script will restore a PostgresSql databae            ##
 ##############################################################
 
-localDatabase="localhost"
-defaultDatabsePort="5432"
 username="postgres"
-postgresSourceDatabaseConnection="localhost"
-postgresDestinationDatabaseConnection="localhost"
-logsFolder="logs"
-
-#Helper method to set postgres db connections
-setDatabaseConnection () {
-  local __dbConnection=$1 
-  if [ "$2" = "LOCAL" ] || [ "$2" = "local" ]; then
-     pgDbConnection=$localDatabase
-  else
-    echo "Unknown environment $2"
-    exit 1
-  fi
-  eval $__dbConnection="'$pgDbConnection'"
-}
 
 # get database to restore
 while getopts ":d:" opt; do

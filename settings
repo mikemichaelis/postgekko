@@ -1,5 +1,0 @@
-export POSTGRESPASS="pass"
-export POSTGRES_DATA="/home/mike/postgress/data"  
-export POSTGRES_LOGS="/home/mike/postgress/logs"
-export POSTGRES_BACKUP="/home/mike/postgress/backup"
-

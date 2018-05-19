@@ -1,7 +1,7 @@
 #!/bin/bash
 #This script will set all necessary env variables and start all docker containers locally
 
-. ./settings
+. ./settings.sh
 
 if [ -z $POSTGRESPASS ]; 
 then 
@@ -18,6 +18,12 @@ fi;
 if [ -z $POSTGRES_LOGS ]; 
 then 
     echo "POSTGRES_LOGS env variable is not set, now exiting.";
+    exit;
+fi;
+
+if [ -z $POSTGRES_BACKUP ]; 
+then 
+    echo "POSTGRES_BACKUP env variable is not set, now exiting.";
     exit;
 fi;
 

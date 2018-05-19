@@ -6,13 +6,12 @@
 username="postgres"
 globals_filename="globals_backup_$(date +%Y-%m-%d)"
 databases_filename="backup_$(date +%Y-%m-%d)"
+output_path="/postgres/backup"
 
 ## First we grab the command line parameters for the output path
 ## and the number of days for our retention period
 while getopts ":p:d:" opt; do
   case $opt in
-    p) output_path="$OPTARG"
-    ;;
     d) database="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
