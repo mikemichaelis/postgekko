@@ -6,8 +6,6 @@ Docker
 
 Git
 
-You have cloned this repository to a local repository.
-
 1. Read but skip this step if you will be customizing #3 below.
     Create three folders on your local computer to be used as persistent storage by postgresSql.
 
