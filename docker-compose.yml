@@ -1,12 +1,13 @@
 version: "2"
 services:
     database:
-        build: ../postgres 
+        build: ./postgres 
         restart: always
         container_name: postgres
         volumes:
             - ${POSTGRES_DATA}:/var/lib/postgresql/data
             - ${POSTGRES_LOGS}:/var/log
+            - ${POSTGRES_BACKUP}:/postgres/backup
         environment:
             - "POSTGRES_USER=postgres"
             - "POSTGRES_PASSWORD=${POSTGRESPASS}" 

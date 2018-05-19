@@ -1,6 +1,8 @@
 #!/bin/bash
 #This script will set all necessary env variables and start all docker containers locally
 
+. ./settings
+
 if [ -z $POSTGRESPASS ]; 
 then 
     echo "POSTGRESPASS env variable is not set, now exiting.";
