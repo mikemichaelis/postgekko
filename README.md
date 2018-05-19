@@ -8,7 +8,7 @@ You have cloned this repository to a local repository.
 
 1. Read but skip this step if you will be customizing #3 below.
     Create three folders on your local computer.
-```shell
+```bash
     cd ~
     mkdir postgress
     cd postgress
@@ -21,24 +21,24 @@ You have cloned this repository to a local repository.
     These folders can exist anywhere in the filesystem.  You can put them on external media, such as a USB drive.  Performance of the media should be very high.
 
 2. Clone this git respository
-```shell
+```bash
     mkdir ~/git
     cd ~/git
     git clone https://github.com/mikemichaelis/postgekko.git
     ```
 
 2. make ~/git/postgekko your CWD
-```shell
+```bash
     cd postgekko
 
 3. Customize the following values in the ./settings.sh file.
-```shell
+```bash
     nano settings.sh
     ```
     
     The default values will work as is and will write to a postgres folder (created above) in the users home.  Otherwise update to folders on the local file system.  This can be an external USB drive (ie /media/usb1/postgres/[data|logs|backup]).  Set the password that will be assigned to the postgres sa user.
 
-```shell
+```bash
     export POSTGRESPASS="password"
     export POSTGRES_DATA="~/postgres/data"  
     export POSTGRES_LOGS="~/postgres/logs"
@@ -49,14 +49,14 @@ You have cloned this repository to a local repository.
 
 4. Build the docker image:
 
-```shell
+```bash
     cd postgress
     docker build .
     ```
 
 5. Start the contained using docker-compose
 
-```shell
+```bash
     cd ..
     chmod +x ./run_postgres.sh
     ./run_postgres.sh
@@ -66,7 +66,7 @@ You have cloned this repository to a local repository.
 
 7. Attach to the postgres container to backup and restore the database
 
-```shell
+```bash
     docker ps
         [copy container id of postgres]
     docker exec -i -t [container id] /bin/bash
